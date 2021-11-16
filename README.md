@@ -9,7 +9,7 @@
 ### STEP 03- Create a conda environment after opening the repository in VSCODE
 
 ```bash
-conda create --prefix ./env python=3.7 -y
+conda create --prefix ./env python=3.7 -y 
 ```
 
 ```bash
@@ -18,6 +18,11 @@ conda activate ./env
 OR
 ```bash
 source activate ./env
+```
+
+### `Trick`: Create a conda env in same directory as the repository and activate it.
+```bash
+conda create --prefix ./env python=3.7 -y && source activate ./env
 ```
 
 ### STEP 04- install the requirements
