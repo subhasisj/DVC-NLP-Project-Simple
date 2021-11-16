@@ -1,1 +1,4 @@
 # This contains params to be used by the stages to train or predict
+prepare:
+  split_ratio: 0.2
+  random_seed: 42
