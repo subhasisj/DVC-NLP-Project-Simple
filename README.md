@@ -1,5 +1,4 @@
-# dvc-project-template
-DVC project template
+# DVC Starter NLP Project
 
 ## STEPS -
 
