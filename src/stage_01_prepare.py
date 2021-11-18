@@ -5,6 +5,7 @@ from tqdm import tqdm
 import logging
 import os
 from src.utils.common import read_yaml, create_directories
+from src.utils.data_mgmt import process_posts
 import random
 
 
@@ -32,10 +33,23 @@ def main(config_path, params_path):
 
     random.seed(random_seed)
 
+    # Create Processed Data Directory
     artifacts = config['artifacts']
     artifacts_dir = artifacts['ARTIFACTS_DIR']
-    processed_data_dir_path = os.path.join(artifacts["ARTIFACTS_DIR"],artifacts['PROCESSED_DATA'])
+    processed_data_dir_path = os.path.join(artifacts_dir,artifacts['PROCESSED_DATA'])
     create_directories([processed_data_dir_path])
+
+    # Read Train and Test Data from Path
+    train_data_path = os.path.join(processed_data_dir_path,artifacts['TRAIN_DATA'])
+    test_data_path = os.path.join(processed_data_dir_path, artifacts['TEST_DATA'])
+
+    # Read the source data file and create Train and Test Data
+    target_tag = "<python>"
+    encoding = "utf-8"
+    with open(source_data_file, 'r',encoding=encoding) as f_in:
+        with open(train_data_path, 'w',encoding=encoding) as f_train:
+            with open(test_data_path, 'w',encoding=encoding) as f_test:
+                process_posts(f_in, f_train, f_test,target_tag, split_ratio)
 
 
     logging.info("Data split and written to disk")
