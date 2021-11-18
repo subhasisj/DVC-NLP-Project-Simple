@@ -1,7 +1,0 @@
-[2021-11-17 01:34:21,286: INFO: stage_01_prepare]: 
-********************
-[2021-11-17 01:34:21,286: INFO: stage_01_prepare]: >>>>> stage One - Prepare started <<<<<
-[2021-11-17 01:34:21,287: INFO: common]: yaml file: configs/config.yaml loaded successfully
-[2021-11-17 01:34:21,288: INFO: common]: yaml file: params.yaml loaded successfully
-[2021-11-17 01:34:21,288: INFO: stage_01_prepare]: >>>>> stage One - Prepare completed!<<<<<
-

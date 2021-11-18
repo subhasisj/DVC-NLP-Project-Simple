@@ -32,6 +32,14 @@ def main(config_path, params_path):
 
     random.seed(random_seed)
 
+    artifacts = config['artifacts']
+    artifacts_dir = artifacts['ARTIFACTS_DIR']
+    processed_data_dir_path = os.path.join(artifacts["ARTIFACTS_DIR"],artifacts['PROCESSED_DATA'])
+    create_directories([processed_data_dir_path])
+
+
+    logging.info("Data split and written to disk")
+
     
 
 
