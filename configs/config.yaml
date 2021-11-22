@@ -5,7 +5,11 @@ artifacts:
   PROCESSED_DATA: processed_data
   TRAIN_DATA: train.tsv
   TEST_DATA: test.tsv
-
+  FEATURES:
+    FEATURE_DIR: features
+    FEATURE_TRAIN_DATA: features_train.pkl
+    FEATURE_TEST_DATA: features_test.pkl
+  
 source_data:
   source_data_dir: data
   source_data_file: data.xml

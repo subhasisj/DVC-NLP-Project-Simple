@@ -2,3 +2,7 @@
 prepare:
   split_ratio: 0.2
   random_seed: 42
+
+FEATURES:
+  MAX_FEATURES: 10000
+  NGRAM_RANGE: 2
