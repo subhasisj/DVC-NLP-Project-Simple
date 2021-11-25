@@ -1,6 +1,6 @@
 # add stages here 
 stages:
-  stage_name:
+  Preparation:
     cmd: python src/stage_01_prepare.py
     deps:
     - src/stage_01_prepare.py
@@ -15,4 +15,39 @@ stages:
     outs:
     - artifacts/processed_data/train.tsv
     - artifacts/processed_data/test.tsv
+
+
+  feature_extraction:
+    cmd: python src/stage_02_feature_engineering.py
+    deps:
+    - src/stage_02_feature_engineering.py
+    - artifacts/processed_data/train.tsv
+    - artifacts/processed_data/test.tsv
+    - src/utils/common.py
+    - src/utils/featurize.py
+    - configs/config.yaml
+
+    params:
+      - FEATURES.MAX_FEATURES
+      - FEATURES.NGRAMS
+    outs:
+    - artifacts/features/features_train.pkl
+    - artifacts/features/features_test.pkl
+
+
+  model_training:
+    cmd: python src/stage_03_train.py --config=configs/config.yaml --params=params.yaml 
+    deps:
+    - src/stage_03_train.py
+    - artifacts/features/features_train.pkl
+    - src/utils/common.py
+    - configs/config.yaml
+
+    params:
+      - TRAIN.SEED
+      - TRAIN.N_ESTIMATORS
+      - TRAIN.MAX_DEPTH
+      - TRAIN.MIN_SAMPLES_SPLIT
+    outs:
+    - artifacts/model/model.pkl
 

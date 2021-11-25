@@ -4,8 +4,8 @@ stages:
     cmd: python src/stage_01_prepare.py
     deps:
     - path: configs/config.yaml
-      md5: f22f09ecb67f64d8fa6fd99d3fe6d79b
-      size: 250
+      md5: 57d392c429f26861b6e2df0ae47b404a
+      size: 437
     - path: data/data.xml
       md5: a304afb96060aad90176268345e10355
       size: 37891850
@@ -29,3 +29,89 @@ stages:
     - path: artifacts/processed_data/train.tsv
       md5: 3ce650a6aa34411f88b596a1dd6448a3
       size: 19051317
+  feature_extraction:
+    cmd: python src/stage_02_feature_engineering.py
+    deps:
+    - path: artifacts/processed_data/test.tsv
+      md5: 1575a0260675015bbb71bb9dfc2b2d48
+      size: 4835002
+    - path: artifacts/processed_data/train.tsv
+      md5: 3ce650a6aa34411f88b596a1dd6448a3
+      size: 19051317
+    - path: configs/config.yaml
+      md5: 57d392c429f26861b6e2df0ae47b404a
+      size: 437
+    - path: src/stage_02_feature_engineering.py
+      md5: 4e9f23663d5cec995913b132b46b0321
+      size: 5592
+    - path: src/utils/common.py
+      md5: d162961d817182441383bdb0e674e685
+      size: 675
+    - path: src/utils/featurize.py
+      md5: 62356bc61614808ea5931f1317725496
+      size: 599
+    params:
+      params.yaml:
+        FEATURES.MAX_FEATURES: 10000
+        FEATURES.NGRAMS: 2
+    outs:
+    - path: artifacts/features/features_test.pkl
+      md5: 2e1293e35c52fa85b6f962aa50c2dfcb
+      size: 2294665
+    - path: artifacts/features/features_train.pkl
+      md5: 6322109959cb0abfd954b8c613e251e7
+      size: 9120373
+  Preparation:
+    cmd: python src/stage_01_prepare.py
+    deps:
+    - path: configs/config.yaml
+      md5: 57d392c429f26861b6e2df0ae47b404a
+      size: 437
+    - path: data/data.xml
+      md5: a304afb96060aad90176268345e10355
+      size: 37891850
+    - path: src/stage_01_prepare.py
+      md5: f540caf1a16793070094b22734e8fb5a
+      size: 2437
+    - path: src/utils/common.py
+      md5: d162961d817182441383bdb0e674e685
+      size: 675
+    - path: src/utils/data_mgmt.py
+      md5: 9eeb2bcec00d5775b4bc5feefeea543a
+      size: 1018
+    params:
+      params.yaml:
+        prepare.random_seed: 42
+        prepare.split_ratio: 0.2
+    outs:
+    - path: artifacts/processed_data/test.tsv
+      md5: 1575a0260675015bbb71bb9dfc2b2d48
+      size: 4835002
+    - path: artifacts/processed_data/train.tsv
+      md5: 3ce650a6aa34411f88b596a1dd6448a3
+      size: 19051317
+  model_training:
+    cmd: python src/stage_03_train.py --config=configs/config.yaml --params=params.yaml
+    deps:
+    - path: artifacts/features/features_train.pkl
+      md5: 6322109959cb0abfd954b8c613e251e7
+      size: 9120373
+    - path: configs/config.yaml
+      md5: 57d392c429f26861b6e2df0ae47b404a
+      size: 437
+    - path: src/stage_03_train.py
+      md5: 46dc78063289849bc79fbbaaacd74c12
+      size: 3024
+    - path: src/utils/common.py
+      md5: d162961d817182441383bdb0e674e685
+      size: 675
+    params:
+      params.yaml:
+        TRAIN.MAX_DEPTH: 5
+        TRAIN.MIN_SAMPLES_SPLIT: 10
+        TRAIN.N_ESTIMATORS: 100
+        TRAIN.SEED: 42
+    outs:
+    - path: artifacts/model/model.pkl
+      md5: 0ae22e1f83fa85e8c641f8e739b4e25c
+      size: 184905

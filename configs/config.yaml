@@ -9,6 +9,9 @@ artifacts:
     FEATURE_DIR: features
     FEATURE_TRAIN_DATA: features_train.pkl
     FEATURE_TEST_DATA: features_test.pkl
+  MODEL:
+    MODEL_DIR: model
+    MODEL_FILE: model.pkl
   
 source_data:
   source_data_dir: data
