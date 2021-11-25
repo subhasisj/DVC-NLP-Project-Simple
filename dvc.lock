@@ -33,11 +33,11 @@ stages:
     cmd: python src/stage_02_feature_engineering.py
     deps:
     - path: artifacts/processed_data/test.tsv
-      md5: 1575a0260675015bbb71bb9dfc2b2d48
-      size: 4835002
+      md5: 7c9ed94b12f5d24713af1b3c9961610a
+      size: 7144484
     - path: artifacts/processed_data/train.tsv
-      md5: 3ce650a6aa34411f88b596a1dd6448a3
-      size: 19051317
+      md5: 4dcc30a8c610aaca299f2dc6b35b74d2
+      size: 16741835
     - path: configs/config.yaml
       md5: 57d392c429f26861b6e2df0ae47b404a
       size: 437
@@ -53,14 +53,14 @@ stages:
     params:
       params.yaml:
         FEATURES.MAX_FEATURES: 10000
-        FEATURES.NGRAMS: 2
+        FEATURES.NGRAMS: 3
     outs:
     - path: artifacts/features/features_test.pkl
-      md5: 2e1293e35c52fa85b6f962aa50c2dfcb
-      size: 2294665
+      md5: 3fc58e3bb81531e719b3818a62d89188
+      size: 3391729
     - path: artifacts/features/features_train.pkl
-      md5: 6322109959cb0abfd954b8c613e251e7
-      size: 9120373
+      md5: 2c9db1c0b7a2b1251d96c93ee76b2371
+      size: 8032165
   Preparation:
     cmd: python src/stage_01_prepare.py
     deps:
@@ -82,36 +82,36 @@ stages:
     params:
       params.yaml:
         prepare.random_seed: 42
-        prepare.split_ratio: 0.2
+        prepare.split_ratio: 0.3
     outs:
     - path: artifacts/processed_data/test.tsv
-      md5: 1575a0260675015bbb71bb9dfc2b2d48
-      size: 4835002
+      md5: 7c9ed94b12f5d24713af1b3c9961610a
+      size: 7144484
     - path: artifacts/processed_data/train.tsv
-      md5: 3ce650a6aa34411f88b596a1dd6448a3
-      size: 19051317
+      md5: 4dcc30a8c610aaca299f2dc6b35b74d2
+      size: 16741835
   model_training:
     cmd: python src/stage_03_train.py --config=configs/config.yaml --params=params.yaml
     deps:
     - path: artifacts/features/features_train.pkl
-      md5: 6322109959cb0abfd954b8c613e251e7
-      size: 9120373
+      md5: 2c9db1c0b7a2b1251d96c93ee76b2371
+      size: 8032165
     - path: configs/config.yaml
       md5: 57d392c429f26861b6e2df0ae47b404a
       size: 437
     - path: src/stage_03_train.py
-      md5: 46dc78063289849bc79fbbaaacd74c12
-      size: 3024
+      md5: b19fc121537eefc8a7eab53f126b5e1f
+      size: 3183
     - path: src/utils/common.py
       md5: d162961d817182441383bdb0e674e685
       size: 675
     params:
       params.yaml:
-        TRAIN.MAX_DEPTH: 5
-        TRAIN.MIN_SAMPLES_SPLIT: 10
+        TRAIN.MAX_DEPTH: 6
+        TRAIN.MIN_SAMPLES_SPLIT: 20
         TRAIN.N_ESTIMATORS: 100
         TRAIN.SEED: 42
     outs:
     - path: artifacts/model/model.pkl
-      md5: 0ae22e1f83fa85e8c641f8e739b4e25c
-      size: 184905
+      md5: 4bad8a079a6d89495e95a0218efe5489
+      size: 454874

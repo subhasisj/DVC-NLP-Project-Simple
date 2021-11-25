@@ -54,6 +54,7 @@ def main(config_path, params_path):
     max_depth = params["TRAIN"]["MAX_DEPTH"]
     min_samples_split = params["TRAIN"]["MIN_SAMPLES_SPLIT"]
     seed = params["TRAIN"]["SEED"]
+    oob_score = params["TRAIN"]["OOB_SCORE"]
 
     # Train Random Forest Classifier
     logging.info("Training Random Forest Classifier")
@@ -62,11 +63,15 @@ def main(config_path, params_path):
         max_depth=max_depth,
         min_samples_split=min_samples_split,
         random_state=seed,
+        oob_score=oob_score,
     )
     start_time = time.time()
     clf.fit(X_train, labels_train)
     end_time = time.time()
     logging.info("Training took {} seconds".format(end_time - start_time))
+
+    # Check OOB Score
+    logging.info("OOB Score: {}".format(clf.oob_score_))
 
     # Save trained model to model_path
     logging.info("Saving trained model to {}".format(model_path))

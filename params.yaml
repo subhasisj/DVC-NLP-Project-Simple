@@ -1,14 +1,15 @@
 # This contains params to be used by the stages to train or predict
 prepare:
-  split_ratio: 0.2
+  split_ratio: 0.3
   random_seed: 42
 
 FEATURES:
   MAX_FEATURES: 10000
-  NGRAMS: 2
+  NGRAMS: 3
 
 TRAIN:
   SEED: 42
   N_ESTIMATORS: 100
-  MAX_DEPTH: 5
-  MIN_SAMPLES_SPLIT: 10
+  MAX_DEPTH: 6
+  MIN_SAMPLES_SPLIT: 20
+  OOB_SCORE: True
