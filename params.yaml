@@ -5,4 +5,4 @@ prepare:
 
 FEATURES:
   MAX_FEATURES: 10000
-  NGRAM_RANGE: 2
+  NGRAMS: 2

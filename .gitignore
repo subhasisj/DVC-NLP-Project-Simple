@@ -139,6 +139,10 @@ configs/secrets.yaml
 
 # add your env folder here if its there
 
+# pickle files
+*.pickle
+*.pkl
+
 
 
 
