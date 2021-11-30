@@ -12,6 +12,19 @@ artifacts:
   MODEL:
     MODEL_DIR: model
     MODEL_FILE: model.pkl
+
+METRICS:
+  METRICS_DIR: metrics
+  METRICS_FILE: metrics.json
+
+PLOTS:
+  PLOTS_DIR: plots
+  PRC: prc.png
+  PRC_FILE: prc.json
+  ROC: roc.png
+  ROC_FILE: roc.json
+  AVG_PRECISION_FILE: avg_precision.json
+  ROC_AUC_SCORE_FILE: roc_auc_score.json
   
 source_data:
   source_data_dir: data
