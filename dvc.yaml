@@ -51,3 +51,32 @@ stages:
     outs:
     - artifacts/model/model.pkl
 
+
+  model_evaluation:
+    cmd: python src/stage_04_evaluate.py --config=configs/config.yaml
+    
+    deps:
+      - src/stage_04_evaluate.py
+      - artifacts/features/features_test.pkl
+      - artifacts/model/model.pkl
+      - src/utils/common.py
+      - configs/config.yaml
+
+    metrics:
+      - metrics.json:
+          cache: false
+
+    plots:
+      - prc.json:
+          cache: false
+          x: recall
+          y: precision
+      - roc.json:
+          cache: false
+          x: fpr
+          y: tpr
+
+  run_plots_command:
+    cmd: dvc plots diff
+
+

@@ -39,8 +39,8 @@ stages:
       md5: 4dcc30a8c610aaca299f2dc6b35b74d2
       size: 16741835
     - path: configs/config.yaml
-      md5: 57d392c429f26861b6e2df0ae47b404a
-      size: 437
+      md5: 5d204744474edbbb77102e7cf78d4da2
+      size: 693
     - path: src/stage_02_feature_engineering.py
       md5: 4e9f23663d5cec995913b132b46b0321
       size: 5592
@@ -65,8 +65,8 @@ stages:
     cmd: python src/stage_01_prepare.py
     deps:
     - path: configs/config.yaml
-      md5: 57d392c429f26861b6e2df0ae47b404a
-      size: 437
+      md5: 5d204744474edbbb77102e7cf78d4da2
+      size: 693
     - path: data/data.xml
       md5: a304afb96060aad90176268345e10355
       size: 37891850
@@ -97,8 +97,8 @@ stages:
       md5: 2c9db1c0b7a2b1251d96c93ee76b2371
       size: 8032165
     - path: configs/config.yaml
-      md5: 57d392c429f26861b6e2df0ae47b404a
-      size: 437
+      md5: 5d204744474edbbb77102e7cf78d4da2
+      size: 693
     - path: src/stage_03_train.py
       md5: b19fc121537eefc8a7eab53f126b5e1f
       size: 3183
@@ -115,3 +115,33 @@ stages:
     - path: artifacts/model/model.pkl
       md5: 4bad8a079a6d89495e95a0218efe5489
       size: 454874
+  model_evaluation:
+    cmd: python src/stage_04_evaluate.py --config=configs/config.yaml
+    deps:
+    - path: artifacts/features/features_test.pkl
+      md5: 3fc58e3bb81531e719b3818a62d89188
+      size: 3391729
+    - path: artifacts/model/model.pkl
+      md5: 4bad8a079a6d89495e95a0218efe5489
+      size: 454874
+    - path: configs/config.yaml
+      md5: 5d204744474edbbb77102e7cf78d4da2
+      size: 693
+    - path: src/stage_04_evaluate.py
+      md5: 7d25b1fc4f0985ef57b4767af10d74dd
+      size: 3380
+    - path: src/utils/common.py
+      md5: d162961d817182441383bdb0e674e685
+      size: 675
+    outs:
+    - path: metrics.json
+      md5: d58975f366f9da68edbb2392d8eab1b4
+      size: 85
+    - path: prc.json
+      md5: 0941646e64e4158a7425fbe6b4900e29
+      size: 146611
+    - path: roc.json
+      md5: b8949a1caf91fb1cc1055f38f09e10db
+      size: 69436
+  run_plots_command:
+    cmd: dvc plots diff
