@@ -52,15 +52,15 @@ stages:
       size: 599
     params:
       params.yaml:
-        FEATURES.MAX_FEATURES: 10000
-        FEATURES.NGRAMS: 3
+        FEATURES.MAX_FEATURES: 5000
+        FEATURES.NGRAMS: 2
     outs:
     - path: artifacts/features/features_test.pkl
-      md5: 3fc58e3bb81531e719b3818a62d89188
-      size: 3391729
+      md5: b0e118806386ac3f9ae860f109ff3bec
+      size: 3056737
     - path: artifacts/features/features_train.pkl
-      md5: 2c9db1c0b7a2b1251d96c93ee76b2371
-      size: 8032165
+      md5: 9d4d57c4b8a1125e3e0548debfe2a1d1
+      size: 7178533
   Preparation:
     cmd: python src/stage_01_prepare.py
     deps:
@@ -94,8 +94,8 @@ stages:
     cmd: python src/stage_03_train.py --config=configs/config.yaml --params=params.yaml
     deps:
     - path: artifacts/features/features_train.pkl
-      md5: 2c9db1c0b7a2b1251d96c93ee76b2371
-      size: 8032165
+      md5: 9d4d57c4b8a1125e3e0548debfe2a1d1
+      size: 7178533
     - path: configs/config.yaml
       md5: 5d204744474edbbb77102e7cf78d4da2
       size: 693
@@ -107,23 +107,23 @@ stages:
       size: 675
     params:
       params.yaml:
-        TRAIN.MAX_DEPTH: 6
-        TRAIN.MIN_SAMPLES_SPLIT: 20
-        TRAIN.N_ESTIMATORS: 100
+        TRAIN.MAX_DEPTH: 8
+        TRAIN.MIN_SAMPLES_SPLIT: 15
+        TRAIN.N_ESTIMATORS: 90
         TRAIN.SEED: 42
     outs:
     - path: artifacts/model/model.pkl
-      md5: 4bad8a079a6d89495e95a0218efe5489
-      size: 454874
+      md5: 703858804e72704ebf51b6270639d167
+      size: 545726
   model_evaluation:
     cmd: python src/stage_04_evaluate.py --config=configs/config.yaml
     deps:
     - path: artifacts/features/features_test.pkl
-      md5: 3fc58e3bb81531e719b3818a62d89188
-      size: 3391729
+      md5: b0e118806386ac3f9ae860f109ff3bec
+      size: 3056737
     - path: artifacts/model/model.pkl
-      md5: 4bad8a079a6d89495e95a0218efe5489
-      size: 454874
+      md5: 703858804e72704ebf51b6270639d167
+      size: 545726
     - path: configs/config.yaml
       md5: 5d204744474edbbb77102e7cf78d4da2
       size: 693
@@ -135,13 +135,13 @@ stages:
       size: 675
     outs:
     - path: metrics.json
-      md5: d58975f366f9da68edbb2392d8eab1b4
+      md5: 0c066f63ad40672c3cc33b2dc8226d89
       size: 85
     - path: prc.json
-      md5: 0941646e64e4158a7425fbe6b4900e29
-      size: 146611
+      md5: 50e9561a5c5c95401a22b7afa7c7bc54
+      size: 303276
     - path: roc.json
-      md5: b8949a1caf91fb1cc1055f38f09e10db
-      size: 69436
+      md5: eddc0b47b266264afd7976783b9afd76
+      size: 107653
   run_plots_command:
     cmd: dvc plots diff
