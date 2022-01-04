@@ -1,1 +1,30 @@
 # add ci-cd steps here
+name: train-NLP-ML-Usecase
+
+on: [push]
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: iterative/setup-cml@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.7"
+
+      - name: cml_run
+        env:
+          repo_token: "${{secrets.GITHUB_TOKEN}}"
+        run: |
+          # ML Workflow Commands
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+          dvc repro -v
+
+          echo "# Reports" >> reports.md
+          echo "## metrics" >> reports.md
+          cat metrics.json >> report.md
+
+          cml-send-comment reports.md
